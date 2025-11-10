@@ -1,0 +1,27 @@
+<?php
+
+use App\Enums\ReservationStatusEnum;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('reservations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('room_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('description')->nullable();
+            $table->timestamp('start_at');
+            $table->timestamp('end_at');
+            $table->tinyInteger('status')->default(ReservationStatusEnum::CONFIRMED->value);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('reservations');
+    }
+};
