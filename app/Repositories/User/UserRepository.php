@@ -3,7 +3,6 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRepository
 {
@@ -21,15 +20,5 @@ class UserRepository
         $user->update($validatedData);
 
         return $user->refresh();
-    }
-
-    public function getAll(): LengthAwarePaginator
-    {
-        return $this->user->paginate();
-    }
-
-    public function delete(User $user): bool
-    {
-        return $user->delete();
     }
 }
